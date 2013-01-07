@@ -4,14 +4,11 @@ import Queue
 from client import relay
 from ui import chat
 
-def _serve(*a, **kw):
-    from server import serve
-
 def main():
     q = Queue.Queue()
     peers = set()
     print 1
-    s = threading.Thread(target=_serve, args=(q, peers)).start()
+    s = threading.Thread(target=serve, args=(q, peers)).start()
     print 2
     r = threading.Thread(target=relay, args=(q, peers)).start()
     print 3

@@ -8,22 +8,34 @@ from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 
 class ChatHandler(BaseHTTPRequestHandler):
 
-	def handle(self):
-		print 'hello'
+	
+	def do_GET(self):
+		self.send_response(200,"<html><body>This is the index page</body></html>")
 
-HandlerClass = ChatHandler
-Protocol     = "HTTP/1.0"
+	def do_POST(self):
+		content_len = int(self.headers.getheader('content-length'))
+		post_body = self.rfile.read(content_len)
+		print post_body
+		self.send_response(200,"OK")
 
-if sys.argv[1:]:
-    port = int(sys.argv[1])
-else:
-    port = 8000
-server_address = ('127.0.0.1', port)
 
-HandlerClass.protocol_version = Protocol
-httpd = HTTPServer(server_address, HandlerClass)
+def serve(queue, peers):
+	HandlerClass = ChatHandler
+	Protocol     = "HTTP/1.0"
 
-sa = httpd.socket.getsockname()
-print "Serving HTTP on", sa[0], "port", sa[1], "..."
-httpd.serve_forever()
+	if sys.argv[1:]:
+	    port = int(sys.argv[1])
+	else:
+	    port = 8000
+	server_address = ('127.0.0.1', port)
+
+	HandlerClass.protocol_version = Protocol
+	httpd = HTTPServer(server_address, HandlerClass)
+
+	sa = httpd.socket.getsockname()
+	print "Serving HTTP on", sa[0], "port", sa[1], "..."
+	httpd.serve_forever()
+
+if __name__ == '__main__':
+	serve(None, None)
 
