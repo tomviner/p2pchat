@@ -1,6 +1,7 @@
 import threading
 import Queue
 
+from server import serve
 from client import relay
 from ui import chat
 
