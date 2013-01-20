@@ -48,7 +48,7 @@ def get_ChatHandler(_queue, _peers):
 def serve(queue, peers, port=None):
     """
     Accept messages and add them to our `queue`,
-    also add senders to our `peers` set.
+    also add senders to our `peers` set
     """
     server_address = ('0.0.0.0', port)
     httpd = HTTPServer(server_address, get_ChatHandler(queue, peers))
